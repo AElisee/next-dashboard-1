@@ -61,7 +61,7 @@ const Chart = () => {
             top: 5,
             right: 30,
             left: 20,
-            bottom: 5,
+            bottom: 10,
           }}
         >
           <XAxis dataKey="name" />
@@ -71,7 +71,7 @@ const Chart = () => {
           <Line
             type="monotone"
             dataKey="visit"
-            stroke="#8884d8"
+            stroke="#f43f5e"
             strokeDasharray="5 5"
           />
           <Line

@@ -18,7 +18,7 @@ const Navbar = () => {
       </div>
       {/* menu */}
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-2 bg-slate-600 p-2 rounded-md">
+        <div className="w-[180px] flex items-center gap-2 bg-slate-600 p-2 py-0 rounded-md">
           <label htmlFor="search">
             <MdSearch size={20} />
           </label>
@@ -26,8 +26,8 @@ const Navbar = () => {
             type="text"
             id="search"
             placeholder="Search..."
-            className="p-1
-          outline-none bg-transparent border-none text-textSoft rounded-md"
+            className="p-1 text-sm
+          outline-none bg-transparent border-none text-textSoft rounded-md placeholder:text-xs"
           />
         </div>
         {/* icons */}
