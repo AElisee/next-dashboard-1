@@ -78,7 +78,7 @@ const Sidebar = () => {
   ];
   return (
     <div className="sticky top-4">
-      <div className="flex items-center gap-1 py-5">
+      <div className="flex items-center gap-1 py-3">
         <div className="relative w-[45px] h-[45px] rounded-full overflow-hidden">
           <Image
             src="/user_avatar.jpg"
@@ -87,7 +87,7 @@ const Sidebar = () => {
           />
         </div>
         <div className="flex flex-col pl-2">
-          <span className="font-semibold">Elisha Koaussi</span>
+          <span className="font-semibold">Elisha Kouassi</span>
           <small>
             <span className="text-textSoft">Administrateur</span>
           </small>

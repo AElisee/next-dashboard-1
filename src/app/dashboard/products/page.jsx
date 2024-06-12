@@ -30,7 +30,7 @@ const productsPage = () => {
                 <span className="flex gap-2 items-center">
                   <span className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
                     <Image
-                      src="/user_avatar.jpg"
+                      src="/noproduct.png"
                       fill
                       className="object-cover object-center w-full h-full"
                     />
@@ -45,7 +45,7 @@ const productsPage = () => {
               <td>
                 <div className="flex  gap-3 item-center item-center">
                   <Link
-                    href=""
+                    href="/dashboard/products/id"
                     className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
                   >
                     Wiew
