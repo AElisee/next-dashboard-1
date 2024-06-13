@@ -1,3 +1,5 @@
+import { fetchProducts } from "@/app/lib/data.js";
+import { DateFormater } from "@/app/lib/utils.js";
 import AddNew from "@/app/ui/dashbord/AddNew.jsx";
 import Pagination from "@/app/ui/dashbord/Pagination.jsx";
 import SearchUi from "@/app/ui/dashbord/SearchUi.jsx";
@@ -5,7 +7,13 @@ import Image from "next/image.js";
 import Link from "next/link.js";
 import React from "react";
 
-const productsPage = () => {
+const productsPage = async ({ searchParams }) => {
+  const search = searchParams?.search || "";
+  const page = searchParams?.page || 1;
+
+  const { count, products } = await fetchProducts(search, page);
+  console.log(products);
+
   return (
     <div className="w-full bg-bgSoft rounded-md p-3 mt-3">
       <div className="flex justify-between items-center">
@@ -25,43 +33,49 @@ const productsPage = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="p-2 text-sm">
-              <td className=" py-3">
-                <span className="flex gap-2 items-center">
-                  <span className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
-                    <Image
-                      src="/noproduct.png"
-                      fill
-                      className="object-cover object-center w-full h-full"
-                    />
+            {products?.map((product) => (
+              <tr key={product.id} className="p-2 text-sm">
+                <td className=" py-3">
+                  <span className="flex gap-2 items-center">
+                    <span className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
+                      <Image
+                        src="/noproduct.png"
+                        fill
+                        className="object-cover object-center w-full h-full"
+                      />
+                    </span>
+                    <span className="text-sm">{product.title}</span>
                   </span>
-                  <span className="text-sm">Samsung Galaxy</span>
-                </span>
-              </td>
-              <td>Lorem ipsum dolor sit amet...</td>
-              <td>200.000 FCFA</td>
-              <td>10.06.2024</td>
-              <td>34</td>
-              <td>
-                <div className="flex  gap-3 item-center item-center">
-                  <Link
-                    href="/dashboard/products/id"
-                    className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
-                  >
-                    Wiew
-                  </Link>
-                  <Link
-                    href=""
-                    className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold"
-                  >
-                    Delete
-                  </Link>
-                </div>
-              </td>
-            </tr>
+                </td>
+                <td>{product.description}</td>
+                <td>{product.price}</td>
+                <td>
+                  {product?.createdAt
+                    ? DateFormater(product.createdAt)
+                    : "13.06.2024"}
+                </td>
+                <td>{product.stock}</td>
+                <td>
+                  <div className="flex  gap-3 item-center item-center">
+                    <Link
+                      href={`/dashboard/products/${product.id}`}
+                      className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
+                    >
+                      Wiew
+                    </Link>
+                    <Link
+                      href=""
+                      className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold"
+                    >
+                      Delete
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination count={count} />
       </div>
     </div>
   );

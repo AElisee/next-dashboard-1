@@ -7,9 +7,10 @@ import Link from "next/link.js";
 import React from "react";
 
 const usersPage = async ({ searchParams }) => {
-  const q = searchParams?.q || " ";
+  const search = searchParams?.search || "";
+  const page = searchParams?.page || 1;
 
-  const users = await fetchUsers(q);
+  const { count, users } = await fetchUsers(search, page);
   // console.log(users);
   return (
     <div className="w-full bg-bgSoft rounded-md p-3 mt-3">
@@ -68,7 +69,7 @@ const usersPage = async ({ searchParams }) => {
             ))}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination count={count} />
       </div>
     </div>
   );
