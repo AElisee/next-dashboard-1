@@ -6,9 +6,11 @@ import Image from "next/image.js";
 import Link from "next/link.js";
 import React from "react";
 
-const usersPage = async () => {
-  const users = await fetchUsers();
-  console.log(users);
+const usersPage = async ({ searchParams }) => {
+  const q = searchParams?.q || " ";
+
+  const users = await fetchUsers(q);
+  // console.log(users);
   return (
     <div className="w-full bg-bgSoft rounded-md p-3 mt-3">
       <div className="flex justify-between items-center">

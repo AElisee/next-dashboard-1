@@ -1,0 +1,13 @@
+#DANS LE COMPOSANT SEARCH
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handleSearch = (e) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("search", e.target.value);
+    replace(`${pathname}?${params}`);
+  };
+
+#LA PAGE OU SONT MAPPER LES DATA
+    - Prends en props searchParams
