@@ -1,4 +1,5 @@
 import { fetchProducts } from "@/app/lib/data.js";
+import { deleteProduct } from "@/app/lib/product.action.js";
 import { DateFormater } from "@/app/lib/utils.js";
 import AddNew from "@/app/ui/dashbord/AddNew.jsx";
 import Pagination from "@/app/ui/dashbord/Pagination.jsx";
@@ -12,7 +13,6 @@ const productsPage = async ({ searchParams }) => {
   const page = searchParams?.page || 1;
 
   const { count, products } = await fetchProducts(search, page);
-  console.log(products);
 
   return (
     <div className="w-full bg-bgSoft rounded-md p-3 mt-3">
@@ -48,7 +48,7 @@ const productsPage = async ({ searchParams }) => {
                   </span>
                 </td>
                 <td>{product.description}</td>
-                <td>{product.price}</td>
+                <td>{parseInt(product.price).toLocaleString()}</td>
                 <td>
                   {product?.createdAt
                     ? DateFormater(product.createdAt)
@@ -58,17 +58,17 @@ const productsPage = async ({ searchParams }) => {
                 <td>
                   <div className="flex  gap-3 item-center item-center">
                     <Link
-                      href={`/dashboard/products/${product.id}`}
+                      href={`/dashboard/products/${product?.id}`}
                       className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
                     >
                       Wiew
                     </Link>
-                    <Link
-                      href=""
-                      className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold"
-                    >
-                      Delete
-                    </Link>
+                    <form action={deleteProduct}>
+                      <input type="hidden" name="id" value={product?.id} />
+                      <button className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold">
+                        Delete
+                      </button>
+                    </form>
                   </div>
                 </td>
               </tr>

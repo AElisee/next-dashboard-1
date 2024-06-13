@@ -14,12 +14,21 @@ export const fetchUsers = async (search, page) => {
       .skip(ITEMS_PER_PAGE * (page - 1));
     return { count, users };
   } catch (error) {
+    throw new Error("Failed to fetch users");
+  }
+};
+
+export const fetchSingleUser = async (id) => {
+  try {
+    dbConnect();
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
     throw new Error("Failed to fetch user");
   }
 };
 
-
-export const fetchProducts= async (search, page) => {
+export const fetchProducts = async (search, page) => {
   const regex = new RegExp(search, "i");
 
   try {
@@ -31,5 +40,15 @@ export const fetchProducts= async (search, page) => {
     return { count, products };
   } catch (error) {
     throw new Error("Failed to fetch products");
+  }
+};
+
+export const fetchSingleProduct = async (id) => {
+  try {
+    dbConnect();
+    const product = await Product.findById(id);
+    return product;
+  } catch (error) {
+    throw new Error("Failed to fetch product");
   }
 };

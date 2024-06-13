@@ -1,4 +1,6 @@
 import { fetchUsers } from "@/app/lib/data.js";
+import { deleteUser } from "@/app/lib/user.action.js";
+import { DateFormater } from "@/app/lib/utils.js";
 import AddNew from "@/app/ui/dashbord/AddNew.jsx";
 import Pagination from "@/app/ui/dashbord/Pagination.jsx";
 import SearchUi from "@/app/ui/dashbord/SearchUi.jsx";
@@ -31,42 +33,48 @@ const usersPage = async ({ searchParams }) => {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user) => (
-              <tr key={user._id} className="p-1 text-sm">
-                <td className=" py-2">
-                  <span className="flex gap-2 items-center">
-                    <span className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
-                      <Image
-                        src="/user_avatar.jpg"
-                        fill
-                        className="object-cover object-center w-full h-full"
-                      />
+            {users
+              ?.sort((a, b) => b.createdAt - a.createdAt)
+              .map((user) => (
+                <tr key={user._id} className="p-1 text-sm">
+                  <td className=" py-2">
+                    <span className="flex gap-2 items-center">
+                      <span className="relative w-[40px] h-[40px] overflow-hidden rounded-full">
+                        <Image
+                          src="/user_avatar.jpg"
+                          fill
+                          className="object-cover object-center w-full h-full"
+                        />
+                      </span>
+                      <span className="text-sm">{user?.username}</span>
                     </span>
-                    <span className="text-sm">{user?.username}</span>
-                  </span>
-                </td>
-                <td>{user?.email}</td>
-                <td>{user?.createAt ? user?.createAt : "11.06.2024"}</td>
-                <td>{user?.isAdmin ? "Admin" : "Client"}</td>
-                <td>{user?.isActive ? "Active" : "Not Active"}</td>
-                <td>
-                  <div className="flex  gap-3 item-center item-center">
-                    <Link
-                      href={`/dashboard/users/${user._id}`}
-                      className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
-                    >
-                      Wiew
-                    </Link>
-                    <Link
-                      href=""
-                      className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold"
-                    >
-                      Delete
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>{user?.email}</td>
+                  <td>
+                    {user?.createdAt
+                      ? DateFormater(user.createdAt)
+                      : "01.01.2024"}
+                  </td>
+                  <td>{user?.isAdmin ? "Admin" : "Client"}</td>
+                  <td>{user?.isActive ? "Active" : "Not Active"}</td>
+                  <td>
+                    <div className="flex  gap-3 item-center item-center">
+                      <Link
+                        href={`/dashboard/users/${user._id}`}
+                        className="max-w-max rounded-md block p-1 px-2 text-xs bg-teal-700 text-text font-semibold"
+                      >
+                        Wiew
+                      </Link>
+                      <form action={deleteUser}>
+                        <input type="hidden" name="id" value={user?.id} />
+                        <button className="max-w-max rounded-md block p-1 text-xs bg-red-700 text-text font-semibold">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <Pagination count={count} />

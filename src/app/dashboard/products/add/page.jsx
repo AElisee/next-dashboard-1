@@ -1,9 +1,10 @@
+import { addProduct } from "@/app/lib/product.action.js";
 import React from "react";
 
 const page = () => {
   return (
     <div className="w-full bg-bgSoft rounded p-3 mt-5">
-      <form action="" className="w-full">
+      <form action={addProduct} className="w-full">
         <div className="flex gap-5 justify-between">
           <div className="w-1/2 flex flex-col gap-4">
             <input
@@ -34,8 +35,8 @@ const page = () => {
               <option value="general" className="text-textSoft">
                 Choose a category
               </option>
-              <option value="">Option 1</option>
-              <option value="">Option 2</option>
+              <option value="phone">Phone</option>
+              <option value="laptop">Laptop</option>
             </select>
             <input
               name="stock"
@@ -52,7 +53,7 @@ const page = () => {
           </div>
         </div>
         <textarea
-          name="desc"
+          name="description"
           id=""
           placeholder="Description"
           className="bg-bg p-4 border-none outline-none w-full h-[170px] mt-3 placeholder:text-textSoft placeholder:opacity-50"

@@ -1,9 +1,10 @@
+import { addUser } from "@/app/lib/user.action.js";
 import React from "react";
 
 const page = () => {
   return (
     <div className="w-full bg-bgSoft rounded p-3 mt-5">
-      <form action="" className="w-full">
+      <form action={addUser} className="w-full">
         <div className="flex gap-5 justify-between">
           <div className="w-1/2 flex flex-col gap-4">
             <input
@@ -44,7 +45,7 @@ const page = () => {
               className="bg-bg p-4 border-none outline-none placeholder:text-textSoft placeholder:opacity-50"
             />
             <select
-              name=""
+              name="isActive"
               id=""
               className="bg-bg p-4 border-none outline-none"
             >

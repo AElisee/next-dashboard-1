@@ -1,7 +1,11 @@
+import { fetchSingleProduct } from "@/app/lib/data.js";
+import { UpdateProduct } from "@/app/lib/product.action.js";
 import Image from "next/image.js";
 import React from "react";
 
-const SingleProduct = () => {
+const SingleProduct = async ({ params }) => {
+  const { id } = params;
+  const product = await fetchSingleProduct(id);
   return (
     <div className="mt-3 p-3 flex  w-full gap-3 bg-bgSoft rounded-md">
       <div className="w-1/4 flex flex-col items-center h-[230px]  gap-2 rounded-md bg-bg p-3">
@@ -12,31 +16,30 @@ const SingleProduct = () => {
             className="object-cover object-center rounded-md"
           />
         </div>
-        Samsung
+        <h3 className="text-xl font-semibold">{product?.title}</h3>
       </div>
       <div className="w-3/4">
-        <form action="" className="w-full flex flex-col text-sm">
+        <form action={UpdateProduct} className="w-full flex flex-col text-sm">
+          <input type="hidden" name="id" value={id} />
           <label htmlFor="" className="text-textSoft text-sm">
             Title
           </label>
           <input
             type="text"
             name="title"
-            defaultValue="Samsung"
+            defaultValue={product.title}
             placeholder="title"
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           />
           <label htmlFor="" className="text-textSoft text-sm">
-            Is Admin ?
+            Category
           </label>
           <select
             name="category"
-            id=""
+            defaultValue={product.category}
             className="bg-bg p-4 border-none outline-none mb-3 mt-1"
           >
-            <option selected value="">
-              Phone
-            </option>
+            <option value="phone">Phone</option>
             <option value={false}>Laptop</option>
           </select>
           <label htmlFor="" className="text-textSoft text-sm">
@@ -45,7 +48,7 @@ const SingleProduct = () => {
           <input
             type="text"
             name="price"
-            defaultValue="200.000"
+            defaultValue={parseInt(product?.price).toLocaleString()}
             placeholder="Price"
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           />
@@ -55,8 +58,7 @@ const SingleProduct = () => {
           <input
             type="text"
             name="color"
-            defaultValue="Blue"
-            placeholder="Color"
+            defaultValue={product?.color}
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           />
           <label htmlFor="" className="text-textSoft text-sm">
@@ -65,8 +67,7 @@ const SingleProduct = () => {
           <input
             type="text"
             name="stock"
-            defaultValue="34"
-            placeholder="Stock"
+            defaultValue={product?.stock}
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           />
           <label htmlFor="" className="text-textSoft text-sm">
@@ -75,19 +76,16 @@ const SingleProduct = () => {
           <input
             type="text"
             name="size"
-            defaultValue=""
-            placeholder="Size"
+            defaultValue={product?.size}
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           />
           <label htmlFor="" className="text-textSoft text-sm">
             Description
           </label>
           <textarea
-            name=""
-            id=""
-            rows={1}
-            defaultValue=""
-            placeholder="Description"
+            name="description"
+            rows={2}
+            defaultValue={product?.description}
             className="bg-bg p-3 mb-3 mt-1 w-full border-none outline-none"
           ></textarea>
           <button className="bg-teal-700 p-3 text-base" type="submit">
