@@ -1,5 +1,4 @@
-import { fetchUsers } from "@/app/lib/data.js";
-import { deleteUser } from "@/app/lib/user.action.js";
+import { deleteUser, fetchUsers } from "@/app/lib/user.action.js";
 import { DateFormater } from "@/app/lib/utils.js";
 import AddNew from "@/app/ui/dashbord/AddNew.jsx";
 import Pagination from "@/app/ui/dashbord/Pagination.jsx";

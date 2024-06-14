@@ -12,8 +12,12 @@ import {
 } from "react-icons/md";
 import MenuLink from "./MenuLink.jsx";
 import Image from "next/image.js";
+import { auth } from "@/auth.js";
+import { handleLogOut } from "@/app/lib/user.action.js";
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const { user } = await auth();
+  console.log(user);
   const menuItems = [
     {
       title: "Pages",
@@ -87,9 +91,11 @@ const Sidebar = () => {
           />
         </div>
         <div className="flex flex-col pl-2">
-          <span className="font-semibold">Elisha Kouassi</span>
+          <span className="font-semibold capitalize">{user.username}</span>
           <small>
-            <span className="text-textSoft">Administrateur</span>
+            <span className="text-textSoft">
+              {user?.isAdmin ? "Super admin" : "Admin"}
+            </span>
           </small>
         </div>
       </div>
@@ -106,10 +112,12 @@ const Sidebar = () => {
         ))}
       </ul>
       <div>
-        <button className="flex rounded-md p-2 gap-1 items-center hover:bg-slate-700 w-full">
-          <MdLogout size={21} />
-          <span>Logout</span>
-        </button>
+        <form action={handleLogOut}>
+          <button className="flex rounded-md p-2 gap-1 items-center hover:bg-slate-700 w-full">
+            <MdLogout size={21} />
+            <span>Logout</span>
+          </button>
+        </form>
       </div>
     </div>
   );

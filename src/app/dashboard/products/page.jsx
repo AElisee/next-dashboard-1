@@ -1,5 +1,4 @@
-import { fetchProducts } from "@/app/lib/data.js";
-import { deleteProduct } from "@/app/lib/product.action.js";
+import { deleteProduct, fetchProducts } from "@/app/lib/product.action.js";
 import { DateFormater } from "@/app/lib/utils.js";
 import AddNew from "@/app/ui/dashbord/AddNew.jsx";
 import Pagination from "@/app/ui/dashbord/Pagination.jsx";

@@ -3,7 +3,36 @@ import { redirect } from "next/navigation.js";
 import dbConnect from "./dbConnect.js";
 import { revalidatePath } from "next/cache.js";
 import { Product } from "./product.model.js";
+import { ITEMS_PER_PAGE } from "./utils.js";
 
+// get all products
+export const fetchProducts = async (search, page) => {
+  const regex = new RegExp(search, "i");
+
+  try {
+    dbConnect();
+    const count = await Product.find({ title: { $regex: regex } }).count();
+    const products = await Product.find({ title: { $regex: regex } })
+      .limit(ITEMS_PER_PAGE)
+      .skip(ITEMS_PER_PAGE * (page - 1));
+    return { count, products };
+  } catch (error) {
+    throw new Error("Failed to fetch products");
+  }
+};
+
+// get single product
+export const fetchSingleProduct = async (id) => {
+  try {
+    dbConnect();
+    const product = await Product.findById(id);
+    return product;
+  } catch (error) {
+    throw new Error("Failed to fetch product");
+  }
+};
+
+// create product
 export const addProduct = async (FormData) => {
   const { title, price, color, size, stock, category, description } =
     Object.fromEntries(FormData);
@@ -30,6 +59,7 @@ export const addProduct = async (FormData) => {
   redirect("/dashboard/products");
 };
 
+// update product
 export const UpdateProduct = async (FormData) => {
   const { id, title, price, color, size, stock, category, description } =
     Object.fromEntries(FormData);
@@ -60,6 +90,8 @@ export const UpdateProduct = async (FormData) => {
   redirect("/dashboard/products");
 };
 
+
+// delete product
 export const deleteProduct = async (FormData) => {
   const { id } = Object.fromEntries(FormData);
 

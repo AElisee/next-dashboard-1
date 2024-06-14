@@ -1,5 +1,5 @@
-import { fetchSingleProduct } from "@/app/lib/data.js";
-import { UpdateProduct } from "@/app/lib/product.action.js";
+ 
+import { UpdateProduct, fetchSingleProduct } from "@/app/lib/product.action.js";
 import Image from "next/image.js";
 import React from "react";
 

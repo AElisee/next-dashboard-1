@@ -4,7 +4,7 @@ import RightBar from "../ui/dashbord/rightbar/RightBar.jsx";
 import Transactions from "../ui/dashbord/transactions/Transactions.jsx";
 import Chart from "../ui/dashbord/chart/Chart.jsx";
 
-const DashbordPage = () => {
+const DashbordPage = async () => {
   return (
     <div className="flex gap-5">
       <div className="flex flex-col w-3/4 gap-5">

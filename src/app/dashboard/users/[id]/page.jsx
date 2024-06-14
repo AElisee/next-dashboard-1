@@ -1,12 +1,10 @@
-import { fetchSingleUser } from "@/app/lib/data.js";
-import { UpdateUser } from "@/app/lib/user.action.js";
+import { UpdateUser, fetchSingleUser } from "@/app/lib/user.action.js";
 import Image from "next/image.js";
 import React from "react";
 
 const SingleUser = async ({ params }) => {
   const { id } = params;
   const user = await fetchSingleUser(id);
-  console.log(user);
 
   return (
     <div className="mt-3 p-3 flex  w-full gap-3 bg-bgSoft rounded-md">

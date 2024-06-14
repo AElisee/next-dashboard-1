@@ -4,6 +4,35 @@ import dbConnect from "./dbConnect.js";
 import { User } from "./user.model.js";
 import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache.js";
+import { ITEMS_PER_PAGE } from "./utils.js";
+import { signIn, signOut } from "@/auth.js";
+
+// get all users
+export const fetchUsers = async (search, page) => {
+  const regex = new RegExp(search, "i");
+
+  try {
+    dbConnect();
+    const count = await User.find({ username: { $regex: regex } }).count();
+    const users = await User.find({ username: { $regex: regex } })
+      .limit(ITEMS_PER_PAGE)
+      .skip(ITEMS_PER_PAGE * (page - 1));
+    return { count, users };
+  } catch (error) {
+    throw new Error("Failed to fetch users");
+  }
+};
+
+// get single user
+export const fetchSingleUser = async (id) => {
+  try {
+    dbConnect();
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
+    throw new Error("Failed to fetch user");
+  }
+};
 
 export const addUser = async (FormData) => {
   const { username, email, password, address, phone, isAdmin, isActive } =
@@ -79,4 +108,22 @@ export const deleteUser = async (FormData) => {
   }
 
   revalidatePath("/dashboard/users");
+};
+
+// authentification
+export const authentificate = async (previousState, FormData) => {
+  const { username, password } = Object.fromEntries(FormData);
+
+  console.log(username, password);
+
+  try {
+    await signIn("credentials", { username, password });
+  } catch (error) {
+    return { error: "Pseudo ou mot de passe incorrecte !" };
+  }
+};
+
+// logout
+export const handleLogOut = async () => {
+  await signOut();
 };
